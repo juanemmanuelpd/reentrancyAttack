@@ -1,66 +1,39 @@
-## Foundry
+# Reentrancy Attack
+## Overview 🪙
+An example of a reentrancy attack on a contract pretending to be an Ether bank.
+## Features 📃
+* A contract representing the bank, with the options to deposit and withdraw funds.
+* A malicious contract representing the attacker. This contract includes the famous "Reentrancy Attack" in its code.
+* A test to verify that the malicious contract can successfully steal funds from all users in the bank contract.
+## Technical details ⚙️
+* Framework CLI -> Foundry.
+* Forge version -> 1.1.0-stable.
+* Solidity compiler version -> 0.8.24.
+## Deploying the contract 🛠️
+1. Clone the GitHub repository.
+2. Open Visual Studio Code (you should already have Foundry installed).
+3. Select "File" > "Open Folder", select the cloned repository folder.
+4. In the project navigation bar, open the "testReentrancyAttack.t.sol" file located in the "test" folder.
+5. In the toolbar above, select "Terminal" > "New Terminal".
+6. Select the "Git bash" terminal (previously installed).
+7. Run the command `forge test -vvvv --match-test` followed by the name of a test function to test it and verify the smart contract functions are working correctly. For example, run `forge test -vvvv --match-test testUserCanDeposit` to test the `testUserCanDeposit` function.
+8. Run `forge coverage` to generate a code coverage report. This helps identify areas outside the coverage that could be exposed to errors/vulnerabilities.
+   
+## Functions (simpleBank) 🏦
+* `deposit()` -> Deposit ether in the bank.
+* `withdraw()` -> Withdraw all the ether that the user has deposited in the bank.
+* `totalBalance()` -> Displays the amount of ether that all users have deposited into the bank.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Functions (reentrancyAttack) 👹
+* `attack()` -> Deposit ether into the bank to withdraw it later and launch the reentrancy attack.
+* `receive()` -> This function will be executed in each iteration of the attack and will verify that there is still ether to steal from the bank, if not, the attack ends.
+  
+## Testing functions ✅
+* `testUserCanDeposit()` -> Verify that any user can deposit ether to the bank.
+* `testUserCanWithdraw()` -> Verify that any user can withdraw ether from the bank.
+* `testAttackerCanSteal()` -> Verify that the reentrancy attack executes correctly.
 
-Foundry consists of:
+## Forge Coverage ✅
+![Forge Coverage](images/forgeCoverage.png)  
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+CODE IS LAW!
