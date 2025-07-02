@@ -68,8 +68,7 @@ contract reentrancyAttackTest is Test{
 
         vm.startPrank(attacker);
         uint256 balanceBefore = simpleBankTesting.userBalance(attacker);
-        simpleBankTesting.deposit{value: amountAttacker}();
-        simpleBankTesting.withdraw();
+        reentrancyAttackTesting.attack{value: amountAttacker}();
         uint256 balanceAfter = address(reentrancyAttackTesting).balance;
         assert(balanceAfter == balanceBefore + amountAttacker + balanceUser);
         vm.stopPrank();
